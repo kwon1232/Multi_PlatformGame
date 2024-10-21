@@ -27,7 +27,15 @@ public:
 	UPROPERTY(EditAnywhere, Meta = (MakeEditWidget = true))
 	FVector targetLocation;
 
+	UFUNCTION(BlueprintCallable)
+	void AddActiveTrigger();
+	UFUNCTION(CallInEditor, Category = "Editor Tools")
+	void RemoveActiveTrigger();
+
 private:
 	FVector globalStartLocation;
 	FVector globalTargetLocation;
+
+	UPROPERTY(EditAnywhere)
+	int activeTriggers = 1;
 };

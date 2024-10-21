@@ -15,6 +15,7 @@ void AMovingPlatform::BeginPlay()
 {
 	Super::BeginPlay();
 
+
 	if (HasAuthority())
 	{
 		// 통신 받기 허용
@@ -31,6 +32,8 @@ void AMovingPlatform::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	// 트리거 작용이 있을 때만 플랫폼이 작동
+	if (activeTriggers < 1) { return; }
 	// Authority를 통해 서버 권한인지 확인 후, 계산을 하고 클라이언트들로 그 결과를 복제한다. 
 	// Authority() 코드가 있는 쪽은 서버이다. !Authority()는 클라이언트이다. Not on server == client	
 	if (HasAuthority())
@@ -52,4 +55,19 @@ void AMovingPlatform::Tick(float DeltaTime)
 		location += speed * DeltaTime * direction;
 		SetActorLocation(location);
 	}
+
+}
+
+void AMovingPlatform::AddActiveTrigger()
+{
+	activeTriggers++;
+}
+
+void AMovingPlatform::RemoveActiveTrigger()
+{
+	if (activeTriggers > 0)
+	{
+		activeTriggers--;
+	}
+
 }
